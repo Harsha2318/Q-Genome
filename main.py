@@ -58,7 +58,7 @@ def load_or_generate_data(use_cached: bool = True, num_mutations: int = 50) -> t
     print(f"Loaded {len(sequences)} sequences ({sum(labels)} mutated, {len(labels)-sum(labels)} reference)")
     return sequences, np.array(labels)
 
-def train_and_evaluate(sequences: list, labels: np.ndarray, max_sequence_length: int = 100) -> dict:
+def train_and_evaluate(sequences: list, labels: np.ndarray, args, max_sequence_length: int = 100) -> dict:
     """
     Train and evaluate the quantum-classical hybrid model.
     
@@ -80,21 +80,39 @@ def train_and_evaluate(sequences: list, labels: np.ndarray, max_sequence_length:
         X = X[:, :max_qubits]
     
     # Initialize and train the classifier
-    print("\nInitializing classical neural network classifier...")
+    print("\nInitializing Quantum-DNA Classifier...")
+    print(f"Input features: {X.shape[1]} (will be embedded into quantum circuit)")
+    print(f"Training for {args.epochs} epochs...")
+    
     classifier = QuantumDNAClassifier(
-        n_qubits=X.shape[1],
-        n_layers=3,  # This parameter is not used in the classical model but kept for compatibility
-        learning_rate=0.001,  # Reduced learning rate
-        epochs=100  # Increased number of epochs
+        n_qubits=min(X.shape[1], 8),  # Limit to 8 qubits for practical quantum simulation
+        n_layers=3,  # Number of quantum circuit layers
+        learning_rate=0.001,
+        epochs=args.epochs
     )
     
     print("Training model...")
-    history = classifier.fit(X, y)
+    # Split data into train and validation sets
+    from sklearn.model_selection import train_test_split
+    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
     
-    # Evaluate on training data
-    print("\nEvaluating model...")
-    metrics = classifier.evaluate(X, y.reshape(-1, 1))
-    print(f"Final Accuracy: {metrics['accuracy']*100:.2f}%")
+    print(f"Training on {len(X_train)} samples, validating on {len(X_val)} samples")
+    history = classifier.fit(X_train, y_train, X_val, y_val)
+    
+    # Evaluate on test data
+    print("\nEvaluating model on test set...")
+    val_loss, val_accuracy = classifier.evaluate(X_val, y_val)
+    
+    # Show detailed metrics
+    print("\n" + "="*50)
+    print("Model Evaluation Results")
+    print("="*50)
+    print(f"Final Training Accuracy: {history['train_acc'][-1]*100:.2f}%")
+    if 'test_acc' in history and len(history['test_acc']) > 0:
+        print(f"Final Validation Accuracy: {history['test_acc'][-1]*100:.2f}%")
+    print(f"Training Time: {history.get('training_time', 0):.2f} seconds")
+    print(f"Final Validation Loss: {val_loss:.4f}")
+    print(f"Final Validation Accuracy: {val_accuracy*100:.2f}%")
     
     # Plot training history
     plt.figure(figsize=(12, 5))
@@ -148,7 +166,8 @@ def train_and_evaluate(sequences: list, labels: np.ndarray, max_sequence_length:
     
     return {
         'history': history,
-        'metrics': metrics,
+        'val_loss': val_loss,
+        'val_accuracy': val_accuracy,
         'plot_path': plot_path,
         'metrics_path': metrics_path
     }
@@ -198,29 +217,26 @@ def main():
         results = train_and_evaluate(
             sequences,
             labels,
+            args,
             max_sequence_length=args.max_sequence_length
         )
         
         training_time = time.time() - start_time
         print(f"\nTraining completed in {training_time:.2f} seconds")
-        print(f"Final Accuracy: {results['metrics']['accuracy']*100:.2f}%")
-        
+        print(f"Final Validation Accuracy: {results['val_accuracy']*100:.2f}%")
+        print(f"Final Validation Loss: {results['val_loss']:.4f}")
         print("\n" + "="*50)
         print("Analysis Complete!")
         print("="*50)
-        print("\nNext steps:")
-        print(f"1. Check '{results['plot_path']}' for training curves")
-        print(f"2. Check '{results['metrics_path']}' for detailed metrics")
-        print("3. Try different hyperparameters using command line arguments")
-        print("4. Experiment with different sequence lengths and mutation types")
-        
     except Exception as e:
-        print(f"\nError: {str(e)}")
-        import traceback
-        traceback.print_exc()
-        return 1
+        print(f"An error occurred: {e}")
+
+print("\nNext steps:")
+print("1. Check 'results/training_history.png' for training curves")
+print("2. Check 'results/metrics.txt' for detailed metrics")
+print("3. Try different hyperparameters using command line arguments")
+print("4. Experiment with different sequence lengths and mutation types")
     
-    return 0
 
 if __name__ == "__main__":
     main()

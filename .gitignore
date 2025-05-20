@@ -19,11 +19,16 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+MANIFEST
+.pytest_cache/
+.coverage
+htmlcov/
 
 # Virtual Environment
 venv/
 env/
 ENV/
+qgenome_env/
 
 # IDE specific files
 .idea/
@@ -31,24 +36,76 @@ ENV/
 *.swp
 *.swo
 *~
+.DS_Store
 
 # Project specific
-results/
-models/
+results/*
+!results/.gitkeep
+models/*
+!models/.gitkeep
 *.pth
 *.pkl
 *.h5
 *.hdf5
-*.pkl
+*.joblib
+*.npy
+*.npz
+*.feather
+*.parquet
 
 # Jupyter Notebook
 .ipynb_checkpoints
+*.ipynb
 
 # Environment variables
 .env
+.env.*
+!.env.example
 
 # Logs and databases
 *.log
+logs/
+*.sql
+*.sqlite
+
+# Quantum Computing
+*.qpic
+*.qasm
+*.qproj
+*.qpf
+*.qsf
+*.qws
+
+# Documentation
+_build/
+_site/
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# Local development
+local_settings.py
+db.sqlite3
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Data files
+*.fasta
+*.fastq
+*.bam
+*.bai
+*.vcf
+*.bed
+*.gtf
+*.gff
+*.sam
+*.cram
+*.crai
+*.tbi
 *.sql
 *.sqlite
 

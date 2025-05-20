@@ -90,7 +90,7 @@ def test_quantum_classifier():
         n_qubits=4,  # Number of qubits
         n_layers=2,  # Number of quantum layers
         learning_rate=0.01,
-        epochs=10  # Reduced epochs for testing
+        epochs=50  # Increased epochs for better training
     )
     
     # Train the classifier
