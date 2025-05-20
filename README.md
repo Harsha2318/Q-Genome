@@ -22,8 +22,8 @@ A high-performance DNA sequence mutation detection system using deep learning, b
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/q-genome.git
-   cd q-genome
+   git clone https://github.com/Harsha2318/Q-Genome.git
+   cd Q-Genome
    ```
 
 2. **Create and activate a virtual environment (recommended)**
