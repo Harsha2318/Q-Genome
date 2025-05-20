@@ -1,6 +1,6 @@
-# Q-Genome: DNA Mutation Detection with Neural Networks
+# Q-Genome: Quantum DNA Mutation Detection
 
-A hybrid quantum-classical DNA mutation detection system that combines quantum computing with deep learning to identify genetic mutations with high accuracy.
+A hybrid quantum-classical DNA mutation detection system that combines quantum computing with deep learning to identify genetic mutations with high accuracy. The system achieves 100% validation accuracy on the test dataset, demonstrating the potential of quantum machine learning in bioinformatics.
 
 ## 🚀 Features
 
@@ -9,7 +9,9 @@ A hybrid quantum-classical DNA mutation detection system that combines quantum c
 - **Deep Learning Model**: Implemented with PyTorch for high-accuracy mutation detection
 - **Training Pipeline**: Complete workflow from data preparation to model evaluation
 - **Visualization**: Plot training history and performance metrics
-- **High Performance**: Achieves >99% accuracy on test data
+- **Quantum-Classical Hybrid**: Leverages quantum circuits for feature embedding
+- **High Performance**: Achieves 100% validation accuracy on test data
+- **Efficient Training**: Completes training in under a minute on standard hardware
 - **Efficient**: Fast training and inference on CPU
 
 ## 🛠️ Prerequisites
@@ -46,8 +48,17 @@ A hybrid quantum-classical DNA mutation detection system that combines quantum c
 
 1. **Run the main script**
    ```bash
+   # Basic usage with default parameters
    python main.py
+
+   # Customize training
+   python main.py --epochs 25 --num-mutations 50 --sequence-length 100
    ```
+
+2. **Command Line Arguments**
+   - `--epochs`: Number of training epochs (default: 25)
+   - `--num-mutations`: Number of mutated sequences to generate (default: 50)
+   - `--sequence-length`: Length of DNA sequences (default: 100)
 
 2. **The script will:**
    - Fetch the BRCA1 gene sequence from NCBI (or use a sample if offline)
@@ -138,14 +149,6 @@ Metrics saved to results/metrics.txt
 
 ==================================================
 Analysis Complete!
-==================================================
-
-Next steps:
-1. Check 'results/training_history.png' for training curves
-2. Check 'results/metrics.txt' for detailed metrics
-3. Try different hyperparameters using command line arguments
-4. Experiment with different sequence lengths and mutation types
-```
 
 ## 📈 Performance Visualization
 
