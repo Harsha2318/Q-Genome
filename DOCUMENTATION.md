@@ -78,28 +78,14 @@ Q-Genome was developed to overcome these challenges by implementing a deep learn
 
 ### Model Architecture
 
-The core of Q-Genome is a deep neural network with the following specifications:
+The core of Q-Genome is a hybrid quantum-classical neural network with the following specifications:
 
 ```
-Input Layer (n_features) 
+Input Layer (DNA sequence features)
         ↓
-Batch Normalization
+Quantum Circuit Layer (4 qubits)
         ↓
-Dense (64 units) + ReLU
-        ↓
-Dropout (0.3)
-        ↓
-Dense (32 units) + ReLU
-        ↓
-Batch Normalization
-        ↓
-Dropout (0.3)
-        ↓
-Dense (16 units) + ReLU
-        ↓
-Batch Normalization
-        ↓
-Dropout (0.3)
+Classical Neural Network
         ↓
 Output Layer (1 unit) + Sigmoid
 ```
@@ -107,6 +93,7 @@ Output Layer (1 unit) + Sigmoid
 ### Key Technologies
 
 - **Programming Language**: Python 3.8+
+- **Quantum Computing Framework**: Pennylane
 - **Deep Learning Framework**: PyTorch
 - **Data Processing**: NumPy, Pandas
 - **Visualization**: Matplotlib, Seaborn
@@ -117,18 +104,24 @@ Output Layer (1 unit) + Sigmoid
 
 1. **Data Preparation**
    - Sequence fetching from NCBI
-   - Mutation generation
-   - Binary encoding
+   - One-hot encoding of DNA sequences
+   - Dimensionality reduction using PCA
    - Train-test split (80-20%)
 
-2. **Model Training**
+2. **Quantum Circuit Training**
+   - 4-qubit quantum circuit with variational layers
+   - RX, RY, RZ gates for feature embedding
+   - CNOT gates for entanglement
+   - Pauli-Z measurement
+
+3. **Classical Network Training**
    - Loss Function: Binary Cross-Entropy
    - Optimizer: Adam
-   - Learning Rate: 0.001
+   - Learning Rate: 0.01
    - Batch Size: 32
    - Epochs: 100
 
-3. **Evaluation**
+4. **Evaluation**
    - Accuracy
    - Loss curves
    - Confusion matrix
