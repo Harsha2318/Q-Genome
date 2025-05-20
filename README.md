@@ -1,6 +1,6 @@
 # Q-Genome: DNA Mutation Detection with Neural Networks
 
-A high-performance DNA sequence mutation detection system using deep learning, built with PyTorch. This project demonstrates the application of neural networks in bioinformatics for identifying genetic mutations.
+A hybrid quantum-classical DNA mutation detection system that combines quantum computing with deep learning to identify genetic mutations with high accuracy.
 
 ## 🚀 Features
 
@@ -61,16 +61,20 @@ A high-performance DNA sequence mutation detection system using deep learning, b
 
 ## 🏗️ Model Architecture
 
-The model uses a deep neural network with the following architecture:
+The model uses a hybrid quantum-classical architecture with the following components:
 
-1. Input Layer: Size depends on sequence length (binary encoded)
-2. Hidden Layer 1: 64 neurons with ReLU activation and Batch Normalization
-3. Dropout (30%)
-4. Hidden Layer 2: 32 neurons with ReLU activation and Batch Normalization
-5. Dropout (30%)
-6. Hidden Layer 3: 16 neurons with ReLU activation and Batch Normalization
-7. Dropout (30%)
-8. Output Layer: 1 neuron with Sigmoid activation
+1. **Quantum Circuit Layer**:
+   - 4-qubit quantum circuit with variational layers
+   - RX, RY, RZ gates for feature embedding
+   - CNOT gates for entanglement
+   - Pauli-Z measurement
+
+2. **Classical Neural Network**:
+   - Input Layer: Quantum circuit output
+   - Hidden Layer 1: 32 neurons with ReLU activation
+   - Hidden Layer 2: 16 neurons with ReLU activation
+   - Hidden Layer 3: 8 neurons with ReLU activation
+   - Output Layer: 1 neuron with Sigmoid activation
 
 ## 🧪 Customization
 
@@ -86,8 +90,8 @@ python main.py --num-mutations 200
 # Process longer DNA sequences
 python main.py --max-sequence-length 200
 
-# Adjust training parameters
-python main.py --epochs 200 --learning-rate 0.0005
+# Adjust quantum and classical parameters
+python main.py --n-qubits 4 --n-layers 2 --epochs 100 --learning-rate 0.01
 ```
 
 ## 📊 Performance
@@ -157,6 +161,7 @@ After training, check the following files in the `results/` directory:
 - NumPy
 - Matplotlib
 - scikit-learn
+- Pennylane (for quantum computing)
 - Biopython (for fetching DNA sequences)
 
 ## 📝 License
