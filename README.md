@@ -150,6 +150,9 @@ Metrics saved to results/metrics.txt
 ==================================================
 Analysis Complete!
 
+```
+
+
 ## 📈 Performance Visualization
 
 After training, check the following files in the `results/` directory:
